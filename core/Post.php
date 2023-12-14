@@ -42,6 +42,11 @@ class Post extends Database
         return $this->db->fetchAll("SELECT title, content, slug, picture_one, picture_two, picture_three, categories, tags, added_date FROM $this->table");
     }
 
+    public function getBySlug(string $slug): array
+    {
+        return $this->db->fetch("SELECT title, content, slug, picture_one, picture_two, picture_three, categories, tags, added_date FROM $this->table WHERE slug = ?", [$slug]);
+    }
+
     public function getRecents(int $limit=4): array
     {
         return $this->db->fetchAll("SELECT title, content, slug, picture_one, picture_two, picture_three, categories, tags, added_date FROM $this->table ORDER BY added_date DESC LIMIT $limit");

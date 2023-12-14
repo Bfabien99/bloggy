@@ -3,70 +3,25 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-12">
-					<div class="heading">Category: Business</div>
+					<div class="heading">Category: All</div>
 				</div>
 			</div>
 			<div class="row posts-entry">
 				<div class="col-lg-8">
-					<div class="blog-entry d-flex blog-entry-search-item">
-						<a href="/single" class="img-link me-4">
-							<img src="images/img_1_sq.jpg" alt="Image" class="img-fluid">
-						</a>
-						<div>
-							<span class="date">Apr. 14th, 2022 &bullet; <a href="#">Business</a></span>
-							<h2><a href="/single">Thought you loved Python? Wait until you meet Rust</a></h2>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-							<p><a href="/single" class="btn btn-sm btn-outline-primary">Read More</a></p>
-						</div>
-					</div>
-
-					<div class="blog-entry d-flex blog-entry-search-item">
-						<a href="/single" class="img-link me-4">
-							<img src="images/img_2_sq.jpg" alt="Image" class="img-fluid">
-						</a>
-						<div>
-							<span class="date">Apr. 14th, 2022 &bullet; <a href="#">Business</a></span>
-							<h2><a href="/single">Thought you loved Python? Wait until you meet Rust</a></h2>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-							<p><a href="/single" class="btn btn-sm btn-outline-primary">Read More</a></p>
-						</div>
-					</div>
-
-					<div class="blog-entry d-flex blog-entry-search-item">
-						<a href="/single" class="img-link me-4">
-							<img src="images/img_3_sq.jpg" alt="Image" class="img-fluid">
-						</a>
-						<div>
-							<span class="date">Apr. 14th, 2022 &bullet; <a href="#">Business</a></span>
-							<h2><a href="/single">Thought you loved Python? Wait until you meet Rust</a></h2>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-							<p><a href="/single" class="btn btn-sm btn-outline-primary">Read More</a></p>
-						</div>
-					</div>
-
-					<div class="blog-entry d-flex blog-entry-search-item">
-						<a href="/single" class="img-link me-4">
-							<img src="images/img_4_sq.jpg" alt="Image" class="img-fluid">
-						</a>
-						<div>
-							<span class="date">Apr. 14th, 2022 &bullet; <a href="#">Business</a></span>
-							<h2><a href="/single">Thought you loved Python? Wait until you meet Rust</a></h2>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-							<p><a href="/single" class="btn btn-sm btn-outline-primary">Read More</a></p>
-						</div>
-					</div>
-
-					<div class="blog-entry d-flex blog-entry-search-item">
-						<a href="/single" class="img-link me-4">
-							<img src="images/img_5_sq.jpg" alt="Image" class="img-fluid">
-						</a>
-						<div>
-							<span class="date">Apr. 14th, 2022 &bullet; <a href="#">Business</a></span>
-							<h2><a href="/single">Thought you loved Python? Wait until you meet Rust</a></h2>
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, nobis ea quis inventore vel voluptas.</p>
-							<p><a href="/single" class="btn btn-sm btn-outline-primary">Read More</a></p>
-						</div>
-					</div>
+					<?php if(!empty($results)):?>
+						<?php foreach ($results as $result):?>
+							<div class="blog-entry d-flex blog-entry-search-item">
+								<a href="/single?slug=<?= $result['slug'];?>" class="img-link me-4">
+									<img src="uploads/<?= $result['picture_one'];?>" alt="Image" class="img-fluid">
+								</a>
+								<div>
+									<span class="date"><?= date("M jS Y", strtotime($result['added_date']));?> &bullet; <a href="#"><?= $result['categories'];?></a></span>
+									<h2><a href="/single?slug=<?= $result['slug'];?>"><?= $result['title'];?></a></h2>
+									<p><?= substr($result['content'], 0, 150);?>[...]</p>
+									<p><a href="/single?slug=<?= $result['slug'];?>" class="btn btn-sm btn-outline-primary">Read More</a></p>
+								</div>
+							</div>
+						<?php endforeach;?>
 
 					<div class="row text-start pt-5 border-top">
 						<div class="col-md-12">
@@ -80,7 +35,9 @@
 							</div>
 						</div>
 					</div>
-
+					<?php else: ?>
+						<p class="text-info">No post found</p>
+					<?php endif; ?>
 				</div>
 
 				<div class="col-lg-4 sidebar">

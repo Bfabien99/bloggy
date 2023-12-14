@@ -21,7 +21,7 @@
             if(!str_contains($query, 'SELECT')){
                 return ['error' => 'SELECT statment must be in the query!'];
             }
-            $stmt = $this->db->query($query);
+            $stmt = $this->db->prepare($query);
             $stmt->execute($params);
             return ['success' => $stmt->fetch()];
         }
@@ -31,7 +31,7 @@
             if(!str_contains($query, 'SELECT')){
                 return ['error' => 'SELECT statment must be in the query!'];
             }
-            $stmt = $this->db->query($query);
+            $stmt = $this->db->prepare($query);
             $stmt->execute($params);
             return ['success' => $stmt->fetchAll()];
         }
