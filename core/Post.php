@@ -39,17 +39,56 @@ class Post extends Database
 
     public function getAll(): array
     {
-        return $this->db->fetchAll("SELECT title, content, slug, picture_one, picture_two, picture_three, categories, tags, added_date FROM $this->table");
+        return $this->db->fetchAll("SELECT title, content, slug, picture_one, picture_two, picture_three, categories, tags, views_count, added_date FROM $this->table");
+    }
+
+    public function search(string $search, int $limit, float $offset): array
+    {
+        $con = $this->db->getDb();
+        $stmt = $con->prepare("SELECT title, content, slug, picture_one, picture_two, picture_three, categories, tags, views_count, added_date FROM $this->table WHERE LOWER(title) LIKE LOWER(:search) LIMIT :limit OFFSET :offset");
+        $searchTerm = '%' . $search . '%';
+        $stmt->bindParam(":search",$searchTerm,PDO::PARAM_STR);
+        $stmt->bindParam(":limit",$limit,PDO::PARAM_INT);
+        $stmt->bindParam(":offset",$offset,type:PDO::PARAM_INT);
+        $stmt->execute();
+        return ['success'=>$stmt->fetchAll()];
+    }
+
+    public function getAllSearch(string $search): array
+    {
+        $con = $this->db->getDb();
+        $stmt = $con->prepare("SELECT title, content, slug, picture_one, picture_two, picture_three, categories, tags, views_count, added_date FROM $this->table WHERE LOWER(title) LIKE LOWER(:search)");
+        $searchTerm = '%' . $search . '%';
+        $stmt->bindParam(":search",$searchTerm,PDO::PARAM_STR);
+        $stmt->execute();
+        return ['success'=>$stmt->fetchAll()];
+    }
+
+    public function incrementPostViews($postId) {
+        return $this->db->query("UPDATE $this->table SET views_count = views_count + 1 WHERE id = ?", [$postId]);
+    }
+
+    public function paginate(int $limit, float $offset): array
+    {
+        $con = $this->db->getDb();
+        $stmt = $con->prepare("SELECT title, content, slug, picture_one, picture_two, picture_three, categories, tags, views_count, added_date FROM $this->table LIMIT :limit OFFSET :offset");
+        $stmt->bindParam(":limit",$limit,PDO::PARAM_INT);
+        $stmt->bindParam(":offset",$offset,type:PDO::PARAM_INT);
+        $stmt->execute();
+        return ['success'=>$stmt->fetchAll()];
     }
 
     public function getBySlug(string $slug): array
     {
-        return $this->db->fetch("SELECT title, content, slug, picture_one, picture_two, picture_three, categories, tags, added_date FROM $this->table WHERE slug = ?", [$slug]);
+        return $this->db->fetch("SELECT id, title, content, slug, picture_one, picture_two, picture_three, categories, tags, views_count, added_date FROM $this->table WHERE slug = ?", [$slug]);
     }
 
-    public function getRecents(int $limit=4): array
+    public function getRecents(int $limit=4, bool $view=false): array
     {
-        return $this->db->fetchAll("SELECT title, content, slug, picture_one, picture_two, picture_three, categories, tags, added_date FROM $this->table ORDER BY added_date DESC LIMIT $limit");
+        if($view){
+            return $this->db->fetchAll("SELECT title, content, slug, picture_one, picture_two, picture_three, categories, tags, views_count, added_date FROM $this->table ORDER BY views_count DESC LIMIT $limit");
+        }
+        return $this->db->fetchAll("SELECT title, content, slug, picture_one, picture_two, picture_three, categories, tags, views_count, added_date FROM $this->table ORDER BY added_date DESC LIMIT $limit");
     }
     
     /**

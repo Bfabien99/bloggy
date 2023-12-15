@@ -8,14 +8,14 @@ $allPosts = [];
 
 // Récupération de tous les Posts
 $result = $Post->getRecents(5);
-if(!empty($result['success'])){
+if(isset($result['success'])){
     $allPosts = $result['success'];
     unset($result);
 }
 
 // Récupération des Posts récents
-$result = $Post->getRecents();
-if(!empty($result['success'])){
+$result = $Post->getRecents(view:1);
+if(isset($result['success'])){
     $recentsPosts = $result['success'];
     unset($result);
 }

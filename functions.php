@@ -1,4 +1,32 @@
 <?php
+    function generatePagination($totalItems, $itemsPerPage, $currentPage, $url)
+    {
+        $totalPages = ceil($totalItems / $itemsPerPage);
+        
+        $pagination = '<ul class="pagination">';
+    
+        if ($totalPages > 1) {
+            if ($currentPage > 1) {
+                $pagination .= '<li class="page-item"><a href="' . $url . 'page=' . ($currentPage - 1) . '" class="page-link">Previous</a></li>';
+            }
+    
+            for ($i = 1; $i <= $totalPages; $i++) {
+                if ($i == $currentPage) {
+                    $pagination .= '<li class="page-item active"><a href="#" class="page-link">' . $i . '</a></li>';
+                } else {
+                    $pagination .= '<li class="page-item"><a href="' . $url . 'page=' . $i . '" class="page-link">' . $i . '</a></li>';
+                }
+            }
+    
+            if ($currentPage < $totalPages) {
+                $pagination .= '<li class="page-item"><a href="' . $url . 'page=' . ($currentPage + 1) . '" class="page-link">Next</a></li>';
+            }
+        }
+    
+        $pagination .= '</ul>';
+    
+        return $pagination;
+    }
 
     function escapeString(string $value): string
     {
@@ -83,8 +111,16 @@
     
         return ['success' => "Fichier uploadé avec succès.", 'name' => $finalName];
     }
-    
-    function resizeImage(string $filePath) {
+        
+    /**
+     * Method resizeImage
+     *
+     * @param string $filePath [explicite description]
+     *
+     * @return array
+     */
+    function resizeImage(string $filePath): array 
+    {
         $uploadDir = 'uploads/';
         chmod($uploadDir, 0755);
         // Vérification de la taille de l'image

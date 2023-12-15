@@ -35,4 +35,12 @@
             $stmt->execute($params);
             return ['success' => $stmt->fetchAll()];
         }
+
+        /**
+         * Get the value of db
+         */ 
+        public function getDb()
+        {
+                return $this->db;
+        }
     }

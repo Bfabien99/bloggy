@@ -185,46 +185,29 @@
             </div>
           </div>
           <!-- END sidebar-box -->  
-          <div class="sidebar-box">
-            <h3 class="heading">Popular Posts</h3>
-            <div class="post-entry-sidebar">
-              <ul>
-                <li>
-                  <a href="">
-                    <img src="images/img_1_sq.jpg" alt="Image placeholder" class="me-4 rounded">
-                    <div class="text">
-                      <h4>There’s a Cool New Way for Men to Wear Socks and Sandals</h4>
-                      <div class="post-meta">
-                        <span class="mr-2">March 15, 2018 </span>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="">
-                    <img src="images/img_2_sq.jpg" alt="Image placeholder" class="me-4 rounded">
-                    <div class="text">
-                      <h4>There’s a Cool New Way for Men to Wear Socks and Sandals</h4>
-                      <div class="post-meta">
-                        <span class="mr-2">March 15, 2018 </span>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="">
-                    <img src="images/img_3_sq.jpg" alt="Image placeholder" class="me-4 rounded">
-                    <div class="text">
-                      <h4>There’s a Cool New Way for Men to Wear Socks and Sandals</h4>
-                      <div class="post-meta">
-                        <span class="mr-2">March 15, 2018 </span>
-                      </div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+					<div class="sidebar-box">
+						<h3 class="heading">Popular Posts</h3>
+						<div class="post-entry-sidebar">
+							<?php if(!empty($mostViewed)):?>
+							<ul>
+								<?php foreach($mostViewed as $viewed):?>
+								<li>
+									<a href="?slug=<?=$viewed['slug']?>">
+										<img src="uploads/<?=$viewed['picture_one']?>" alt="Image placeholder" class="me-4 rounded">
+										<div class="text">
+											<h4><?=$viewed['title']?></h4>
+											<div class="post-meta">
+												<span class="mr-2"><?=date("M jS Y",strtotime($viewed['added_date']))?></span>
+											</div>
+										</div>
+									</a>
+								</li>
+								<?php endforeach; ?>
+							</ul>
+							<?php else:?>
+							<?php endif;?>
+						</div>
+					</div>
           <!-- END sidebar-box -->
 
           <div class="sidebar-box">
@@ -271,50 +254,22 @@
         <div class="col-12 text-uppercase text-black">More Blog Posts</div>
       </div>
       <div class="row">
-        <div class="col-md-6 col-lg-3">
-          <div class="blog-entry">
-            <a href="/single" class="img-link">
-              <img src="images/img_1_horizontal.jpg" alt="Image" class="img-fluid">
-            </a>
-            <span class="date">Apr. 14th, 2022</span>
-            <h2><a href="/single">Thought you loved Python? Wait until you meet Rust</a></h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-            <p><a href="#" class="read-more">Continue Reading</a></p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="blog-entry">
-            <a href="/single" class="img-link">
-              <img src="images/img_2_horizontal.jpg" alt="Image" class="img-fluid">
-            </a>
-            <span class="date">Apr. 14th, 2022</span>
-            <h2><a href="/single">Startup vs corporate: What job suits you best?</a></h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-            <p><a href="#" class="read-more">Continue Reading</a></p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="blog-entry">
-            <a href="/single" class="img-link">
-              <img src="images/img_3_horizontal.jpg" alt="Image" class="img-fluid">
-            </a>
-            <span class="date">Apr. 14th, 2022</span>
-            <h2><a href="/single">UK sees highest inflation in 30 years</a></h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-            <p><a href="#" class="read-more">Continue Reading</a></p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-          <div class="blog-entry">
-            <a href="/single" class="img-link">
-              <img src="images/img_4_horizontal.jpg" alt="Image" class="img-fluid">
-            </a>
-            <span class="date">Apr. 14th, 2022</span>
-            <h2><a href="/single">Don’t assume your user data in the cloud is safe</a></h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-            <p><a href="#" class="read-more">Continue Reading</a></p>
-          </div>
-        </div>
+        <?php if($morePosts):?>
+            <?php foreach($morePosts as $post):?>
+              <div class="col-md-6 col-lg-3">
+                <div class="blog-entry">
+                  <a href="/single?slug=<?= $post['slug'];?>" class="img-link">
+                    <img src="uploads/<?= $post['picture_one'];?>" alt="Image" class="img-fluid">
+                  </a>
+                  <span class="date"><?= date("M jS Y", strtotime($post['added_date']));?></span>
+                  <h2><a href="/single?slug=<?= $post['slug'];?>"><?= $post['title'];?></a></h2>
+                  <p><?= substr($post['content'], 0, 50);?>[...]</p>
+                  <p><a href="/single?slug=<?= $post['slug'];?>" class="read-more">Continue Reading</a></p>
+                </div>
+              </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+        <?php endif; ?>
       </div>
     </div>
   </section>

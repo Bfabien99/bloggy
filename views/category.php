@@ -26,12 +26,7 @@
 					<div class="row text-start pt-5 border-top">
 						<div class="col-md-12">
 							<div class="custom-pagination">
-								<span>1</span>
-								<a href="#">2</a>
-								<a href="#">3</a>
-								<a href="#">4</a>
-								<span>...</span>
-								<a href="#">15</a>
+								<?= generatePagination($totalItems, $itemsPerPage, $currentPage, $url)?>
 							</div>
 						</div>
 					</div>
@@ -52,41 +47,24 @@
 					<div class="sidebar-box">
 						<h3 class="heading">Popular Posts</h3>
 						<div class="post-entry-sidebar">
+							<?php if(!empty($mostViewed)):?>
 							<ul>
+								<?php foreach($mostViewed as $viewed):?>
 								<li>
-									<a href="">
-										<img src="images/img_1_sq.jpg" alt="Image placeholder" class="me-4 rounded">
+									<a href="?slug=<?=$viewed['slug']?>">
+										<img src="uploads/<?=$viewed['picture_one']?>" alt="Image placeholder" class="me-4 rounded">
 										<div class="text">
-											<h4>There’s a Cool New Way for Men to Wear Socks and Sandals</h4>
+											<h4><?=$viewed['title']?></h4>
 											<div class="post-meta">
-												<span class="mr-2">March 15, 2018 </span>
+												<span class="mr-2"><?=date("M jS Y",strtotime($viewed['added_date']))?></span>
 											</div>
 										</div>
 									</a>
 								</li>
-								<li>
-									<a href="">
-										<img src="images/img_2_sq.jpg" alt="Image placeholder" class="me-4 rounded">
-										<div class="text">
-											<h4>There’s a Cool New Way for Men to Wear Socks and Sandals</h4>
-											<div class="post-meta">
-												<span class="mr-2">March 15, 2018 </span>
-											</div>
-										</div>
-									</a>
-								</li>
-								<li>
-									<a href="">
-										<img src="images/img_3_sq.jpg" alt="Image placeholder" class="me-4 rounded">
-										<div class="text">
-											<h4>There’s a Cool New Way for Men to Wear Socks and Sandals</h4>
-											<div class="post-meta">
-												<span class="mr-2">March 15, 2018 </span>
-											</div>
-										</div>
-									</a>
-								</li>
+								<?php endforeach; ?>
 							</ul>
+							<?php else:?>
+							<?php endif;?>
 						</div>
 					</div>
 					<!-- END sidebar-box -->

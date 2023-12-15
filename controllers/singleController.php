@@ -12,8 +12,21 @@ if(!array_key_exists('slug', $_GET) || empty($_GET['slug'])){
 $slug = escapeString($_GET['slug']);
 $result = $Post->getBySlug($slug);
 
-if(!empty($result['success'])){
+if(isset($result['success'])){
     $singlePost = $result['success'];
+    $Post->incrementPostViews($singlePost['id']);
+    unset($result);
+}
+
+$result = $Post->getRecents(3, 1);
+if(isset($result['success'])){
+    $mostViewed = $result['success'];
+    unset($result);
+}
+
+$result = $Post->getRecents( );
+if(isset($result['success'])){
+    $morePosts = $result['success'];
     unset($result);
 }
 

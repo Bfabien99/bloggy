@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           // Insertion du Post dans la Base de Données
           if(empty($errors)){
                $result = $Post->add();
-               if(!empty($result['success'])){
+               if(isset($result['success'])){
                     $success = "New Post created!";
                }else{
                     $errors = $result['error'];
