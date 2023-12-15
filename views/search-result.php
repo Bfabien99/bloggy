@@ -51,7 +51,7 @@
 							<ul>
 								<?php foreach($mostViewed as $viewed):?>
 								<li>
-									<a href="?slug=<?=$viewed['slug']?>">
+									<a href="/single?slug=<?=$viewed['slug']?>">
 										<img src="uploads/<?=$viewed['picture_one']?>" alt="Image placeholder" class="me-4 rounded">
 										<div class="text">
 											<h4><?=$viewed['title']?></h4>
