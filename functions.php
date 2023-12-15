@@ -7,19 +7,19 @@
     
         if ($totalPages > 1) {
             if ($currentPage > 1) {
-                $pagination .= '<li class="page-item"><a href="' . $url . 'page=' . ($currentPage - 1) . '" class="page-link">Previous</a></li>';
+                $pagination .= '<li class="page-item"><a href="' . $url . 'page=' . ($currentPage - 1) . '" class="page-link">P</a></li>';
             }
     
             for ($i = 1; $i <= $totalPages; $i++) {
                 if ($i == $currentPage) {
-                    $pagination .= '<li class="page-item active"><a href="#" class="page-link">' . $i . '</a></li>';
+                    $pagination .= '<li class="page-item"><a href="#" class="page-link bg-info rounded-circle">' . $i . '</a></li>';
                 } else {
                     $pagination .= '<li class="page-item"><a href="' . $url . 'page=' . $i . '" class="page-link">' . $i . '</a></li>';
                 }
             }
     
             if ($currentPage < $totalPages) {
-                $pagination .= '<li class="page-item"><a href="' . $url . 'page=' . ($currentPage + 1) . '" class="page-link">Next</a></li>';
+                $pagination .= '<li class="page-item"><a href="' . $url . 'page=' . ($currentPage + 1) . '" class="page-link">N</a></li>';
             }
         }
     
